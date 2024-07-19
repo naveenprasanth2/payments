@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User findByUserName(String userName) {
+        System.out.println(userRepository.findByUserName(userName).get());
         return userRepository.findByUserName(userName)
                 .orElseThrow(() -> new NoSuchUserException(userName));
     }
