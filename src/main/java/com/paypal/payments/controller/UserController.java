@@ -12,17 +12,16 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
-    UserMapper userMapper;
 
     @PostMapping("/register")
     public ResponseEntity<UserDto> register(@RequestBody UserDto userDto) {
-        User user = userMapper.mapDtoToUser(userDto);
+        User user = UserMapper.MAPPER.mapDtoToUser(userDto);
         User obtainedUser = userService.registerUser(user.getUserName(), user.getPassword(), user.getEmail());
-        return ResponseEntity.ok(userMapper.mapUserToDto(obtainedUser));
+        return ResponseEntity.ok(UserMapper.MAPPER.mapUserToDto(obtainedUser));
     }
 
     @GetMapping("/{userName}")
     public ResponseEntity<UserDto> getUser(@PathVariable String userName) {
-        return ResponseEntity.ok(userMapper.mapUserToDto(userService.findByUserName(userName)));
+        return ResponseEntity.ok(UserMapper.MAPPER.mapUserToDto(userService.findByUserName(userName)));
     }
 }
